@@ -10,31 +10,58 @@ mydb = mysql.connector.connect(
 
 app = Flask(__name__) # Instancia de la clase con el constructor
 
-@app.route('/') # Decorador modifica el comportamiento de una funcion
-def index():
+@app.route('/read') # Decorador modifica el comportamiento de una funcion
+def read():
     sql = 'SELECT * FROM tasks'
     cur = mydb.cursor()
     cur.execute(sql)
     result = cur.fetchall()
+    print(result)
     return render_template('home.html', tasks = result)
 
-@app.route('/createtask') # Decorador modifica el comportamiento de una funcion
-def createtask():
+@app.route('/edit') # Decorador modifica el comportamiento de una funcion
+def edit():
+    id = request.args.get('id')
+    sql = f"SELECT * FROM tasks WHERE id={id}"
+    cur = mydb.cursor()
+    cur.execute(sql)
+    result = cur.fetchall()
+    print(result)
+    return render_template('edit-task.html', task = result[0])
+
+@app.route('/update', methods=['POST'])
+def update():
+    id = request.args.get('id')
+    taskName = request.form['task'] # Variable name que viene del formulario 
+    taskDate = request.form['date']
+    sql = f"UPDATE tasks set task = '{taskName}', date = '{taskDate}' WHERE id={id}"
+    cur = mydb.cursor()
+    cur.execute(sql)
+    mydb.commit()
+    return redirect(url_for('read'))
+
+@app.route('/delete') # Decorador modifica el comportamiento de una funcion
+def delete():
+    id = request.args.get('id')
+    sql = f"DELETE FROM tasks WHERE id={id}"
+    cur = mydb.cursor()
+    cur.execute(sql)
+    mydb.commit()
+    return redirect(url_for('read'))
+
+@app.route('/create')
+def create():
     return render_template('create-task.html')
 
-@app.route('/addtask', methods=['POST']) 
-def addtask():
-    if request.method == 'POST':
-        taskName = request.form['task'] # Variable name que viene del formulario 
-        taskDate = request.form['date'] # Variable date que viene del formulario
-        cur = mydb.cursor()
-        sql = f"INSERT INTO tasks (task,date) VALUES ('{taskName}','{taskDate}')"
-        cur.execute(sql)
-        mydb.commit()
-        print('taskName: ',taskName, 'taskDate: ', taskDate)
-        return redirect(url_for('index'))
-    return 'Error'
-
+@app.route('/add', methods = ['POST'])
+def add():
+    task = request.form['task']
+    date = request.form['date']
+    sql = f"INSERT INTO tasks (task, date) VALUES ('{task}', '{date}')"
+    cur = mydb.cursor()
+    cur.execute(sql)
+    mydb.commit()
+    return redirect(url_for('read'))
 
 if __name__== "__main__": # Servidor 
     app.run(debug=True)

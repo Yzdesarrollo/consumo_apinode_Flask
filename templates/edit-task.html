@@ -2,15 +2,15 @@
 {% block content %}
 <div class="my-5"></div>
 <h1>Login works</h1>
-<form method="POST" action="/add">
+<form method="POST" action="/update?id={{task.0}}">
   <div class="form-group">
     <label for="exampleInputEmail1">Task Name</label>
-    <input type="text" class="form-control" name="task" id="exampleInputEmail1" aria-describedby="emailHelp"
+    <input type="text" value="{{task.1}}" class="form-control" name="task" id="exampleInputEmail1" aria-describedby="emailHelp"
       placeholder="Enter task">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Date</label>
-    <input type="text" name="date" class="form-control" id="exampleInputPassword1" placeholder="Enter date">
+    <input type="text" value="{{task.2}}" name="date" class="form-control" id="exampleInputPassword1" placeholder="Enter date">
   </div>
   <button type="submit" class="btn btn-primary">Crear</button>
 </form>

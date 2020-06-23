@@ -1,14 +1,31 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <div class="my-5"></div>
-    <h1>Home works</h1>
-    <div class="jumbotron">
-        <h1 class="display-4">Hello, world!</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <p class="lead">
-          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-        </p>
-      </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Task</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for task in tasks %}
+    <tr>
+      <td>{{task.0}}</td>
+      <td>{{task.1}}</td>
+      <td>{{task.2}}</td>
+      <td>
+        <div class="row">
+          <div class="col-6">
+            <a href="/edit?id={{task.0}}" class="btn btn-primary">Edit</a>
+          </div>
+          <div class="col-6">
+            <a href="/delete?id={{task.0}}" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
