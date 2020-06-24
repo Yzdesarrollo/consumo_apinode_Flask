@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for # Importaciones
 import mysql.connector
+import requests as req
 
 mydb = mysql.connector.connect(
     host='localhost',
@@ -12,6 +13,8 @@ app = Flask(__name__) # Instancia de la clase con el constructor
 
 @app.route('/read') # Decorador modifica el comportamiento de una funcion
 def read():
+    response = req.get('http://localhost:3000/api/listtasks')
+    print(response.json())
     sql = 'SELECT * FROM tasks'
     cur = mydb.cursor()
     cur.execute(sql)
