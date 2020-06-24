@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for # Importaciones
 import mysql.connector
-import requests as req
+import requests as req # 1. Instalar la libreria e importarla
 
 mydb = mysql.connector.connect(
     host='localhost',
@@ -13,12 +13,14 @@ app = Flask(__name__) # Instancia de la clase con el constructor
 
 @app.route('/read') # Decorador modifica el comportamiento de una funcion
 def read():
-    response = req.get('http://localhost:3000/api/listtasks')
-    print(response.json())
-    sql = 'SELECT * FROM tasks'
-    cur = mydb.cursor()
-    cur.execute(sql)
-    result = cur.fetchall()
+    response = req.get('http://localhost:3000/api/listtasks') # 2.usando el endpoint
+    #print(response.json()) # 3. Pruebas si esta trayendo los datos
+    #print(response.json()['tasks'])
+    result = response.json()['tasks']
+    # sql = 'SELECT * FROM tasks'
+    # cur = mydb.cursor()
+    # cur.execute(sql)
+    # result = cur.fetchall()
     print(result)
     return render_template('home.html', tasks = result)
 

@@ -11,16 +11,16 @@
   <tbody>
     {% for task in tasks %}
     <tr>
-      <td>{{task.0}}</td>
-      <td>{{task.1}}</td>
-      <td>{{task.2}}</td>
+      <td>{{task['_id']}}</td>
+      <td>{{task['task']}}</td>
+      <td>{{task['date']}}</td>
       <td>
         <div class="row">
           <div class="col-6">
-            <a href="/edit?id={{task.0}}" class="btn btn-primary">Edit</a>
+            <a href="/edit?id={{task['_id']}}" class="btn btn-primary">Edit</a>
           </div>
           <div class="col-6">
-            <a href="/delete?id={{task.0}}" class="btn btn-danger">Delete</a>
+            <a href="/delete?id={{task['_id']}}" class="btn btn-danger">Delete</a>
           </div>
         </div>
       </td>
