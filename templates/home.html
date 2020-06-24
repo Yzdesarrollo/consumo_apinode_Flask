@@ -11,14 +11,14 @@
   <tbody>
     {% for task in tasks %}
     <tr>
-      <td>{{task['_id']}}</td>
+      <td>{{task['_id']}}</td> <!--usando los nombres del arreglo-->
       <td>{{task['task']}}</td>
       <td>{{task['date']}}</td>
       <td>
         <div class="row">
           <div class="col-6">
             <a href="/edit?id={{task['_id']}}" class="btn btn-primary">Edit</a>
-          </div>
+          </div><!--usando el nombre _id que viene mongo-->
           <div class="col-6">
             <a href="/delete?id={{task['_id']}}" class="btn btn-danger">Delete</a>
           </div>
